@@ -1,14 +1,30 @@
-# Nord-Dach App – Server-Paket
+# Nord-Dach App – Server-Paket 2.1.1
 
-Vorübergehende Ablage für die Einrichtung der Synology. Wird danach gelöscht.
+Vorübergehende Ablage für die Synology. Wird danach gelöscht.
 
-## 1. App herunterladen
+## App herunterladen
 
-**[nord-dach-app-2.0.0.tar herunterladen](https://github.com/ConversionForge/nord-dach-server/raw/main/nord-dach-app-2.0.0.tar)** (ca. 80 MB)
+**[nord-dach-app-2.1.1.tar herunterladen](https://github.com/ConversionForge/nord-dach-server/raw/main/nord-dach-app-2.1.1.tar)** (ca. 80 MB)
+
+## Update einer laufenden App (der Normalfall)
+
+1. In DSM: Container Manager › Image › Aktion › Importieren › Aus Datei hinzufügen › vom Computer hochladen,
+   die heruntergeladene Datei wählen. Danach steht dort **nord-dach-app** mit dem Tag **2.1.1**.
+2. Container Manager › Projekt › **nord-dach** › **YAML-Konfigurationen**: nur die Zeile mit `image:` ändern, sodass dort steht:
+
+   ```yaml
+       image: nord-dach-app:2.1.1
+   ```
+
+3. Speichern und das Projekt neu starten lassen. Fotos, Baustellen und Zugänge bleiben erhalten.
+
+## Erst-Einrichtung (nur beim allerersten Mal)
+
+### 1. Image importieren
 
 In DSM: Container Manager › Image › Aktion › Importieren › Aus Datei hinzufügen › vom Computer hochladen.
 
-## 2. docker-compose.yml
+### 2. docker-compose.yml
 
 In DSM: Container Manager › Projekt › Erstellen › Quelle „docker-compose.yml erstellen“ und diesen Inhalt einfügen
 (oben rechts am Kasten auf „Copy“ klicken):
@@ -27,7 +43,7 @@ name: nord-dach
 
 services:
   app:
-    image: nord-dach-app:2.0.0
+    image: nord-dach-app:2.1.1
     container_name: nord-dach-app
     restart: always
     ports:
@@ -48,7 +64,7 @@ services:
       - /volume1/Nord-Dach:/ablage
 ```
 
-## 3. Nach dem Festplatten-Umzug (Daten auf Volume 2)
+### 3. Nach dem Festplatten-Umzug (Daten auf Volume 2)
 
 Gleiche Datei, nur der Foto-Ordner liegt jetzt auf Volume 2. Diesen Inhalt nach dem Umzug verwenden:
 
@@ -66,7 +82,7 @@ name: nord-dach
 
 services:
   app:
-    image: nord-dach-app:2.0.0
+    image: nord-dach-app:2.1.1
     container_name: nord-dach-app
     restart: always
     ports:
@@ -95,7 +111,7 @@ dieses Skript einfügen, speichern, die Aufgabe markieren und **Ausführen**:
 ```sh
 PATH=$PATH:/usr/local/bin
 cd "$(ls -d /volume*/docker/nord-dach | head -n 1)" || exit 1
-curl -fL -o app.tar https://github.com/ConversionForge/nord-dach-server/raw/main/nord-dach-app-2.0.0.tar || exit 1
+curl -fL -o app.tar https://github.com/ConversionForge/nord-dach-server/raw/main/nord-dach-app-2.1.1.tar || exit 1
 docker load -i app.tar && rm -f app.tar
 ```
 

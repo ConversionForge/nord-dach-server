@@ -11,7 +11,7 @@ name: nord-dach
 
 services:
   app:
-    image: nord-dach-app:2.0.0
+    image: nord-dach-app:2.1.1
     container_name: nord-dach-app
     restart: always
     ports:
